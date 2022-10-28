@@ -5,7 +5,9 @@ import (
 	"unicode/utf8"
 )
 
+/////////////////////////////////////////////////////////////
 // Unit Test
+/////////////////////////////////////////////////////////////
 // func TestReverse(t *testing.T) {
 //     testcases := []struct {
 //         in, want string
@@ -22,7 +24,9 @@ import (
 //     }
 // }
 
-// Fuzz Test
+/////////////////////////////////////////////////////////////
+// Naive FuzzReverse
+/////////////////////////////////////////////////////////////
 // func FuzzReverse(f *testing.F) {
 //     testcases := []string{"Hello, world", " ", "!12345"}
 //     for _, tc := range testcases {
@@ -41,7 +45,9 @@ import (
 //     })
 // }
 
-// Final
+/////////////////////////////////////////////////////////////
+// Optimal FuzzReverse
+/////////////////////////////////////////////////////////////
 func FuzzReverse(f *testing.F) {
     testcases := []string {"Hello, world", " ", "!12345"}
     for _, tc := range testcases {
@@ -61,6 +67,42 @@ func FuzzReverse(f *testing.F) {
         }
         if utf8.ValidString(orig) && !utf8.ValidString(rev) {
             t.Errorf("Reverse produced invalid UTF-8 string %q", rev)
+        }
+    })
+}
+
+/////////////////////////////////////////////////////////////
+// Largest number fuzz test
+/////////////////////////////////////////////////////////////
+// func FuzzLargestNumber(f *testing.F) {
+//     testcases := [][]int {[]int{99,1,52,6,101,4},[]int{9,101,4,2,6,4,4}}
+//     for _, tc := range testcases {
+//         f.Add(tc)  // Use f.Add to provide a seed corpus
+//     }
+
+//     f.Fuzz(func(t *testing.T, input []int){
+//         largest := LargestNumber(input)
+//         actual := 101
+//         if(largest!=actual){
+//             t.Errorf("Received: %d,Actual: %d",largest,actual)
+//         }
+
+//     })
+// }
+
+/////////////////////////////////////////////////////////////
+// Compare 100 dummy fuzz test
+/////////////////////////////////////////////////////////////
+func FuzzCompare100(f *testing.F) {
+    testcases := []int{100,2,349,100,492,2}
+    for _, tc := range testcases {
+        f.Add(tc)  // Use f.Add to provide a seed corpus
+    }
+
+    f.Fuzz(func(t *testing.T, input int){
+        res := Compare100(input)
+        if(input!=100 && res==true){
+            t.Errorf("wrong")
         }
     })
 }
