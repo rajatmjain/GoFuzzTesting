@@ -2,6 +2,8 @@ package main
 
 import (
 	"testing"
+
+	schemaBasedInputGenerator "github.com/rajatjain007/GoFuzzTesting/helper"
 )
 
 /////////////////////////////////////////////////////////////
@@ -121,34 +123,20 @@ import (
 //     })
 // }
 
-func FuzzIsPositiveAndEven(f *testing.F) {
-    testcases := []int {8,4,88,102,6,4128,2048,2}
-    for _, tc := range testcases {
-        f.Add(tc)  // Use f.Add to provide a seed corpus
-    }
-
-    f.Fuzz(func(t *testing.T, input int){
-        isPositive,isEven := IsPositiveAndEven(input)
-        if(isPositive!=true || isEven!=true){
-            t.Errorf("Error!")
-        }
-
-    })
-}
-
-// func TestIsPositiveAndEven(t *testing.T) {
-//     testcases := []struct {
-//         in int
-//         want bool
-//     }{
-//         {0, true},
-//         {10,true},
-//         {30489,true},
-//     }
-//     for _, tc := range testcases {
-//         isPositive,isEven := IsPositiveAndEven(tc.in)
-//         if (isPositive != true && isEven != true) {
-//                 t.Errorf("Error!")
+// func FuzzIsPositiveAndEven(f *testing.F) {
+//     f.Fuzz(func(t *testing.T, input int){
+//         isPositive,isEven := IsPositiveAndEven(input)
+//         if(isPositive!=true || isEven!=true){
+//             t.Errorf("Error!")
 //         }
-//     }
+
+//     })
 // }
+
+func TestIsPositiveAndEven(t *testing.T) {
+    value := schemaBasedInputGenerator.ExampleCustomInt(schemaBasedInputGenerator.CustomInt{1,10000})
+    isPositive,isEven := IsPositiveAndEven(value)
+        if (isPositive != true && isEven != true) {
+                t.Errorf("Error!")
+        }
+}
