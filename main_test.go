@@ -122,7 +122,7 @@ import (
 // }
 
 func FuzzIsPositiveAndEven(f *testing.F) {
-    testcases := []int {0,8,88,102,4128,2048}
+    testcases := []int {8,4,88,102,6,4128,2048,2}
     for _, tc := range testcases {
         f.Add(tc)  // Use f.Add to provide a seed corpus
     }
@@ -130,7 +130,7 @@ func FuzzIsPositiveAndEven(f *testing.F) {
     f.Fuzz(func(t *testing.T, input int){
         isPositive,isEven := IsPositiveAndEven(input)
         if(isPositive!=true || isEven!=true){
-            t.Errorf("Invalid date.")
+            t.Errorf("Error!")
         }
 
     })
@@ -138,16 +138,17 @@ func FuzzIsPositiveAndEven(f *testing.F) {
 
 // func TestIsPositiveAndEven(t *testing.T) {
 //     testcases := []struct {
-//         in in
+//         in int
+//         want bool
 //     }{
-//         {"Hello, world", "dlrow ,olleH"},
-//         {" ", " "},
-//         {"!12345", "54321!"},
+//         {0, true},
+//         {10,true},
+//         {30489,true},
 //     }
 //     for _, tc := range testcases {
-//         rev := Reverse(tc.in)
-//         if rev != tc.want {
-//                 t.Errorf("Reverse: %q, want %q", rev, tc.want)
+//         isPositive,isEven := IsPositiveAndEven(tc.in)
+//         if (isPositive != true && isEven != true) {
+//                 t.Errorf("Error!")
 //         }
 //     }
 // }
