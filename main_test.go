@@ -2,7 +2,6 @@ package main
 
 import (
 	"testing"
-	"unicode/utf8"
 )
 
 /////////////////////////////////////////////////////////////
@@ -48,28 +47,28 @@ import (
 /////////////////////////////////////////////////////////////
 // Optimal FuzzReverse
 /////////////////////////////////////////////////////////////
-func FuzzReverse(f *testing.F) {
-    testcases := []string {"Hello, world", " ", "!12345"}
-    for _, tc := range testcases {
-        f.Add(tc)  // Use f.Add to provide a seed corpus
-    }
-    f.Fuzz(func(t *testing.T, orig string) {
-        rev, err1 := Reverse(orig)
-        if err1 != nil {
-            return
-        }
-        doubleRev, err2 := Reverse(rev)
-        if err2 != nil {
-             return
-        }
-        if orig != doubleRev {
-            t.Errorf("Before: %q, after: %q", orig, doubleRev)
-        }
-        if utf8.ValidString(orig) && !utf8.ValidString(rev) {
-            t.Errorf("Reverse produced invalid UTF-8 string %q", rev)
-        }
-    })
-}
+// func FuzzReverse(f *testing.F) {
+//     testcases := []string {"Hello, world", " ", "!12345"}
+//     for _, tc := range testcases {
+//         f.Add(tc)  // Use f.Add to provide a seed corpus
+//     }
+//     f.Fuzz(func(t *testing.T, orig string) {
+//         rev, err1 := Reverse(orig)
+//         if err1 != nil {
+//             return
+//         }
+//         doubleRev, err2 := Reverse(rev)
+//         if err2 != nil {
+//              return
+//         }
+//         if orig != doubleRev {
+//             t.Errorf("Before: %q, after: %q", orig, doubleRev)
+//         }
+//         if utf8.ValidString(orig) && !utf8.ValidString(rev) {
+//             t.Errorf("Reverse produced invalid UTF-8 string %q", rev)
+//         }
+//     })
+// }
 
 /////////////////////////////////////////////////////////////
 // Largest number fuzz test
@@ -93,16 +92,62 @@ func FuzzReverse(f *testing.F) {
 /////////////////////////////////////////////////////////////
 // Compare 100 dummy fuzz test
 /////////////////////////////////////////////////////////////
-func FuzzCompare100(f *testing.F) {
-    testcases := []int{100,2,349,100,492,2}
+// func FuzzCompare100(f *testing.F) {
+//     testcases := []int{100,2,349,100,492,2}
+//     for _, tc := range testcases {
+//         f.Add(tc)  // Use f.Add to provide a seed corpus
+//     }
+
+//     f.Fuzz(func(t *testing.T, input int){
+//         res := Compare100(input)
+//         if(input!=100 && res==true){
+//             t.Errorf("wrong")
+//         }
+//     })
+// }
+
+// func FuzzIsValidDate(f *testing.F) {
+//     testcases := []MyDate {{1,10},{31,12},{4,4}}
+//     for _, tc := range testcases {
+//         f.Add(tc)  // Use f.Add to provide a seed corpus
+//     }
+
+//     f.Fuzz(func(t *testing.T, date MyDate){
+//         isValidDay,isValidMonth := IsValidDate(date)
+//         if(isValidDay!=true || isValidMonth!=true){
+//             t.Errorf("Invalid date.")
+//         }
+
+//     })
+// }
+
+func FuzzIsPositiveAndEven(f *testing.F) {
+    testcases := []int {0,8,88,102,4128,2048}
     for _, tc := range testcases {
         f.Add(tc)  // Use f.Add to provide a seed corpus
     }
 
     f.Fuzz(func(t *testing.T, input int){
-        res := Compare100(input)
-        if(input!=100 && res==true){
-            t.Errorf("wrong")
+        isPositive,isEven := IsPositiveAndEven(input)
+        if(isPositive!=true || isEven!=true){
+            t.Errorf("Invalid date.")
         }
+
     })
 }
+
+// func TestIsPositiveAndEven(t *testing.T) {
+//     testcases := []struct {
+//         in in
+//     }{
+//         {"Hello, world", "dlrow ,olleH"},
+//         {" ", " "},
+//         {"!12345", "54321!"},
+//     }
+//     for _, tc := range testcases {
+//         rev := Reverse(tc.in)
+//         if rev != tc.want {
+//                 t.Errorf("Reverse: %q, want %q", rev, tc.want)
+//         }
+//     }
+// }
