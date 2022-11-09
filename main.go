@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	fuzz "github.com/google/gofuzz"
+	fuzz "GoFuzzTesting/gofuzz"
 )
 
 func main() {
@@ -28,20 +28,19 @@ func main() {
 	int32Fuzzer.Fuzz(&C)
 	fmt.Println("Random integer32: ",C)
 
-	// Float64 Fuzzer
+	//Float64 Fuzzer
 	var D float64
-	float64Schema := fuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 0}
+	float64Schema := fuzz.Float64Schema{Minimum: 0,Maximum: 10000,Precision: 9}
 	float64Fuzzer := fuzz.New().Funcs(float64Schema.CustomFloat64FuzzFunc())
 	float64Fuzzer.Fuzz(&D)
 	fmt.Println("Random float64: ",D)
 
-	// Float32 Fuzzer
+	//Float32 Fuzzer
 	var E float32
-	float32Schema := fuzz.Float32Schema{Minimum: 0,Maximum: 10000,Precision: 0}
+	float32Schema := fuzz.Float32Schema{Minimum: 0,Maximum: 10000,Precision: 2}
 	float32Fuzzer := fuzz.New().Funcs(float32Schema.CustomFloat32FuzzFunc())
 	float32Fuzzer.Fuzz(&E)
 	fmt.Println("Random float32: ",E)
-	
 
 } 
 
