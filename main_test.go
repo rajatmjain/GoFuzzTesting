@@ -1,11 +1,5 @@
 package main
 
-import (
-	"testing"
-	"unicode/utf8"
-)
-
-
 func FuzzReverse(f *testing.F) {
     testcases := []string{"Hello World!","This is fuzz testing!!"}
 
@@ -34,7 +28,7 @@ func FuzzReverse(f *testing.F) {
 //     f.Fuzz(func(t *testing.T, i int){
 //         ans := IsPositiveAndEven(i)
 //         if(!ans){
-//             t.Errorf("No")  
+//             t.Errorf("No")
 //         }
 //     })
 // }
